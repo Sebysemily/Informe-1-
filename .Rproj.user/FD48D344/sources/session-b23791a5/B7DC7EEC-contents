@@ -2,17 +2,78 @@
 title: "Informe 1"
 author: "Roger Calvas"
 date: "2025-09-10"
-output: html_document
+output: 
+  html_document: 
+    toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Cargar librerias y setear working directory
-```{r-Preliminario}
-setwd("C:/Users/sebas/Downloads/ej 1")
-getwd()
+```{r Preliminario}
+#install.packages("hierfstat")
+#install.packages("ade4")
+#install.packages("adegenet")
 library("hierfstat")
 library("ade4")
 library("adegenet")
 ```
+##PARTE I- Diversidad Genética
+#Leer matriz de datos para estimar índices de diversidad genética
+```{r csv1}
+mantas<-read.csv("Data/Matriz_alélica_mantas_1.csv",header = TRUE,sep = ";")
+mantas_diversity<-df2genind(mantas[,-1:-2], ind.names = mantas$X, pop = mantas$Pop,sep = "-", ploidy = 2)
+```
+#Estimar la heterocigocidad de cada población
+```{r estimacion_hs}
+Diversidad_por_locus<-summary(mantas_diversity)
+
+Diversidad_por_locus
+
+Hs_por_poblacion<-Hs(mantas_diversity)
+
+Hs_por_poblacion
+```
+#Comparar si los valores de Hs son diferentes entre poblaciones (estadística inferencial)
+```{r comparacion}
+Hs_ContvsSC<-Hs.test(mantas_diversity[mantas_diversity$pop==1],
+                     mantas_diversity[mantas_diversity$pop==2],
+                     n.sim = 999,alter = "two-sided")
+
+Hs_ContvsSC
+```
+##PARTE II- Distancias Genéticas
+
+#Leer matriz de datos y convertirla a formato para estimar distancias genéticas
+```{r csv2}
+mantas2<-read.csv("Data/Matriz_alélica_mantas_2.csv")
+mantas2_gen<-as.data.frame(mantas2[,-1])
+
+head(mantas2_gen)
+```
+
+#Cálculo de distancias genéticas
+
+#Distancias de Nei
+```{r nei}
+mantas2_nei<-pairwise.neifst(mantas2_gen,diploid=TRUE)
+
+mantas2_nei
+```
+#DIstancias de Weir-Cockram (Fst)
+
+```{r weir}
+mantas2_FST<-pairwise.WCfst(mantas2_gen, diploid=TRUE)
+
+mantas2_FST
+```
+
+
+
+
+
+
+

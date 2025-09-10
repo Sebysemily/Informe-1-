@@ -10,7 +10,7 @@ library("adegenet")
 ##PARTE I- Diversidad Genética
 
 #Leer matriz de datos para estimar índices de diversidad genética
-mantas<-read.csv("Matriz_alélica_mantas_1.csv",header = TRUE,sep = ";")
+mantas<-read.csv("Data/Matriz_alélica_mantas_1.csv",header = TRUE,sep = ";")
 mantas_diversity<-df2genind(mantas[,-1:-2], ind.names = mantas$X, pop = mantas$Pop,sep = "-", ploidy = 2)
 
 #Estimar la heterocigocidad de cada población
@@ -29,7 +29,7 @@ Hs_ContvsSC
 ##PARTE II- Distancias Genéticas
 
 #Leer matriz de datos y convertirla a formato para estimar distancias genéticas
-mantas2<-read.csv("Matriz_alélica_mantas_2.csv")
+mantas2<-read.csv("Data/Matriz_alélica_mantas_2.csv")
 mantas2_gen<-as.data.frame(mantas2[,-1])
 head(mantas2_gen)
 
