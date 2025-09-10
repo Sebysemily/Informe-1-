@@ -1,0 +1,18 @@
+---
+title: "Informe 1"
+author: "Roger Calvas"
+date: "2025-09-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Cargar librerias y setear working directory
+```{r-Preliminario}
+setwd("C:/Users/sebas/Downloads/ej 1")
+getwd()
+library("hierfstat")
+library("ade4")
+library("adegenet")
+```
